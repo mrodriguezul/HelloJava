@@ -11,7 +11,9 @@ public class Main {
 
         // esta es una nueva línea en el tiempo
         System.out.println(mensaje.lanzarAlarma("Multiverso!"));
-        System.out.println(mensaje.lanzarAlarma("Multiverso2!"));
+        //System.out.println(mensaje.lanzarAlarma("Multiverso2!"));
 
+        // esta línea de código agregar en la base, el 2 ya no existe
+        System.out.println(mensaje.lanzarAlarma("Multiverso3!"));
     }
 }
