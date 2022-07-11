@@ -9,10 +9,6 @@ public class Main {
 
         System.out.println(mensaje.lanzarAlarma("bebito!"));
 
-        System.out.println(mensaje.lanzarAlarma("bebito2!"));
-        System.out.println(mensaje.lanzarAlarma("bebito3!"));
-        System.out.println(mensaje.lanzarAlarma("bebito4!"));
-
         Persona persona = new Persona("Miguel", "Rodríguez");
         System.out.println(mensaje.lanzarMensaje(String.valueOf(persona)));
 
