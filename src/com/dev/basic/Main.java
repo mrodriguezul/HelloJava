@@ -9,6 +9,8 @@ public class Main {
 
         System.out.println(mensaje.lanzarAlarma("bebito!"));
 
+        // esta es una nueva línea en el tiempo
+        System.out.println(mensaje.lanzarAlarma("Multiverso!"));
 
     }
 }
