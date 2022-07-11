@@ -11,6 +11,7 @@ public class Main {
 
         // esta es una nueva línea en el tiempo
         System.out.println(mensaje.lanzarAlarma("Multiverso!"));
+        System.out.println(mensaje.lanzarAlarma("Multiverso2!"));
 
     }
 }
