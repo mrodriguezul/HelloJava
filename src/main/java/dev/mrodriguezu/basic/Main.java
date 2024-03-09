@@ -1,4 +1,4 @@
-package src.com.dev.basic;
+package dev.mrodriguezu.basic;
 
 public class Main {
     public static void main(String[] args) {
