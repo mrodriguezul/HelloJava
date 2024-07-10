@@ -1,4 +1,4 @@
-package dev.mrodriguezu.basic;
+package dev.mrodriguezul.basic;
 
 public class Mensaje {
 

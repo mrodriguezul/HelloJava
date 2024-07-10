@@ -1,4 +1,4 @@
-package dev.mrodriguezu.operaciones;
+package dev.mrodriguezul.operaciones;
 
 public class Calculos {
     public static void main(String[] args) {

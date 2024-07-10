@@ -1,4 +1,4 @@
-package dev.mrodriguezu.estdatos;
+package dev.mrodriguezul.estdatos;
 
 public class Arreglos {
     public static void main(String[] args) {

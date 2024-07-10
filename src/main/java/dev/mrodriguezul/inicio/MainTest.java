@@ -1,4 +1,4 @@
-package dev.mrodriguezu.inicio;
+package dev.mrodriguezul.inicio;
 
 public class MainTest {
     public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package dev.mrodriguezu.bucles;
+package dev.mrodriguezul.bucles;
 
 public class ForLoop {
     public static void main(String[] args) {
