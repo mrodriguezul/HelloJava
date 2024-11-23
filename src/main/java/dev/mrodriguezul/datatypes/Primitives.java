@@ -1,13 +1,23 @@
 package dev.mrodriguezul.datatypes;
 
 public class Primitives {
+    public static byte valorU;
+    public static short valorT;
+    public static char valorZ;
+    public static int valorW;
+    public static long valorS;
+    public static float valorY;
+    public static double valorX;
+    public static boolean valorV;
+
     public static void main(String[] args) {
         //showPrimitives1();
         //showPrimitives2();
         //showPrimitives3();
         //showPrimitives4();
         //showPrimitives5();
-        showPrimitives6();
+        //showPrimitives6();
+        showPrimitives7();
     }
 
     static void showPrimitives1(){
@@ -120,5 +130,15 @@ public class Primitives {
 
     }
 
-
+    private static void showPrimitives7() {
+        // Default primitives values as a static reference without initialization
+        System.out.println("valorU: " + valorU);//byte: prints 0
+        System.out.println("valorT: " + valorT);//short: prints 0
+        System.out.println("valorZ: " + valorZ);//char: prints 0 (unsigned 16 bits)
+        System.out.println("valorW: " + valorW);//int: prints 0
+        System.out.println("valorS: " + valorS);//long: prints 0
+        System.out.println("valorY: " + valorY);//float: prints 0.0
+        System.out.println("valorX: " + valorX);//:double: prints 0.0
+        System.out.println("valorV: " + valorV);//boolean: prints false
+    }
 }
