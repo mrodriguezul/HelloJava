@@ -1,7 +1,7 @@
 package dev.mrodriguezul.datatypes;
 
-import dev.mrodriguezul.basic.Mensaje;
-import dev.mrodriguezul.basic.Persona;
+import dev.mrodriguezul.entity.Mensaje;
+import dev.mrodriguezul.entity.Persona;
 
 public class LocalVariable {
 

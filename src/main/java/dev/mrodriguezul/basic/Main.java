@@ -1,5 +1,8 @@
 package dev.mrodriguezul.basic;
 
+import dev.mrodriguezul.entity.Mensaje;
+import dev.mrodriguezul.entity.Persona;
+
 public class Main {
     public static void main(String[] args) {
         System.out.println("hey!");
