@@ -24,9 +24,11 @@ public class Main {
                     scanner.nextLine(); // Limpiar el salto de línea pendiente
                     System.out.println("Enter the name of the doctor:");
                     String name = scanner.nextLine();
+                    System.out.println("Enter the email of the doctor:");
+                    String email = scanner.nextLine();
                     System.out.println("Enter the name of the speciality:");
                     String speciality = scanner.nextLine();
-                    Doctor doctor = createDoctor(name, speciality);
+                    Doctor doctor = createDoctor(name, email, speciality);
                     System.out.println("Add available appointments (optional, press 0 to skip):");
                     int addAppointmentResponse;
                     do{
@@ -52,7 +54,7 @@ public class Main {
                     break;
                 case 0:
                     System.out.println("Exiting the program.");
-                    Doctor.setNextId(1); // Reset the ID counter
+                    //Doctor.setNextId(1); // Reset the ID counter
                     break;
                 default:
                     System.out.println("Invalid option, please try again.");
@@ -72,9 +74,9 @@ public class Main {
         System.out.print("Enter your choice: ");
     }
 
-    public static Doctor createDoctor(String name, String speciality) {
+    public static Doctor createDoctor(String name, String email, String speciality) {
         System.out.println("Doctor created successfully!");
-        return new Doctor(name, speciality);
+        return new Doctor(name, email, speciality);
     }
 
     public static void listDoctors(List<Doctor> lstDoctors) {

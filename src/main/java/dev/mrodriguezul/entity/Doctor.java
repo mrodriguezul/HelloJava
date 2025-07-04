@@ -4,47 +4,15 @@ import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Doctor {
-    private int id;
-    private String name;
+public class Doctor extends Person {
+
     private String speciality;
     private static int nextId = 1;
     private List<AvailableAppointment> availableAppointments = new ArrayList<>();
 
-    public Doctor(int id, String name, String speciality) {
-        this.id = id;
-        this.name = name;
+    public Doctor(String name, String email, String speciality) {
+        super(name, email);
         this.speciality = speciality;
-    }
-
-    public Doctor(String name, String speciality) {
-        this.id = autoincrement();
-        this.name = name;
-        this.speciality = speciality;
-    }
-
-    private static int autoincrement() {
-        return nextId++;
-    }
-
-    public static void setNextId(int i) {
-        nextId = i;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getSpeciality() {
@@ -66,8 +34,9 @@ public class Doctor {
     @Override
     public String toString() {
         return "Doctor{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
+
+                ", name='" + getName() + '\'' +
+                ", email='" + getEmail() + '\'' +
                 ", speciality='" + speciality + '\'' +
                 ", availableAppointments=" + availableAppointments +
                 '}';

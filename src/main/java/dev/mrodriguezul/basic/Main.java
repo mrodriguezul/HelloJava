@@ -1,7 +1,7 @@
 package dev.mrodriguezul.basic;
 
 import dev.mrodriguezul.entity.Mensaje;
-import dev.mrodriguezul.entity.Persona;
+import dev.mrodriguezul.entity.Person;
 
 public class Main {
     public static void main(String[] args) {
@@ -12,7 +12,7 @@ public class Main {
 
         System.out.println(mensaje.lanzarAlarma("bebito!"));
 
-        Persona persona = new Persona("Miguel", "Rodríguez");
+        Person persona = new Person("Miguel", "Rodríguez");
         System.out.println(mensaje.lanzarMensaje(String.valueOf(persona)));
 
     }

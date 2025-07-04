@@ -1,7 +1,7 @@
 package dev.mrodriguezul.datatypes;
 
 import dev.mrodriguezul.entity.Mensaje;
-import dev.mrodriguezul.entity.Persona;
+import dev.mrodriguezul.entity.Person;
 
 public class LocalVariable {
 
@@ -25,7 +25,7 @@ public class LocalVariable {
         var respMethod = new Mensaje().lanzarMensaje("Hello BNB!");
         System.out.println(respMethod.concat(" - ").concat("This is a test"));
 
-        var persona = new Persona("Miguel", "Rodríguez");
+        var persona = new Person("Miguel", "miguel@gmail.com");
         System.out.println(persona);
         //considerations when we use this type of variable
         //var is not a keyword, it is a reserved type name
