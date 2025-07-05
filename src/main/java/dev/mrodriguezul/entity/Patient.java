@@ -60,4 +60,9 @@ public class Patient extends Person {
                 ", blood='" + blood + '\'' +
                 '}';
     }
+
+    @Override
+    public void displayInfo() {
+        System.out.println("Patient Information: " + this.toString());
+    }
 }

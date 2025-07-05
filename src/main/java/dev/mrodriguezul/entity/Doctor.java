@@ -7,7 +7,6 @@ import java.util.List;
 public class Doctor extends Person {
 
     private String speciality;
-    private static int nextId = 1;
     private List<AvailableAppointment> availableAppointments = new ArrayList<>();
 
     public Doctor(String name, String email, String speciality) {
@@ -34,12 +33,17 @@ public class Doctor extends Person {
     @Override
     public String toString() {
         return "Doctor{" +
-
+                "id=" + getId() +
                 ", name='" + getName() + '\'' +
                 ", email='" + getEmail() + '\'' +
                 ", speciality='" + speciality + '\'' +
                 ", availableAppointments=" + availableAppointments +
                 '}';
+    }
+
+    @Override
+    public void displayInfo() {
+        System.out.println("Doctor ID: " + getId());
     }
 
     public static class AvailableAppointment {
@@ -78,7 +82,7 @@ public class Doctor extends Person {
 
         @Override
         public String toString() {
-            return "{" +
+            return "Available Appointments{" +
                     " date=" + date +
                     ", time=" + time + "}";
         }

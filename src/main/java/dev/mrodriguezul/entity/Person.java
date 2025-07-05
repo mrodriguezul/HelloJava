@@ -1,6 +1,6 @@
 package dev.mrodriguezul.entity;
 
-public class Person {
+public abstract class Person {
 
     private int id;
     private String name;
@@ -67,4 +67,6 @@ public class Person {
     public String toString() {
         return name + " - " + email + " - " + address + " - " + phoneNumber;
     }
+
+    public abstract void displayInfo();
 }
