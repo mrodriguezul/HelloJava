@@ -1,5 +1,7 @@
 package dev.mrodriguezul.entity;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +24,7 @@ public class Doctor extends Person {
         this.speciality = speciality;
     }
 
-    public void addAvailableAppointment(Date date, String time) {
+    public void addAvailableAppointment(String date, String time) {
         availableAppointments.add(new AvailableAppointment(date, time));
     }
 
@@ -50,9 +52,14 @@ public class Doctor extends Person {
         private int id;
         private Date date;
         private String time;
+        private SimpleDateFormat sdFormat = new SimpleDateFormat("dd/MM/yyyy");
 
-        public AvailableAppointment(Date date, String time) {
-            this.date = date;
+        public AvailableAppointment(String date, String time) {
+            try {
+                this.date = sdFormat.parse(date);
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
             this.time = time;
         }
 
@@ -66,6 +73,10 @@ public class Doctor extends Person {
 
         public Date getDate() {
             return date;
+        }
+
+        public String getDate(String dateFormat) {
+            return sdFormat.format(date);
         }
 
         public void setDate(Date date) {
