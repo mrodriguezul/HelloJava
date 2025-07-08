@@ -90,6 +90,58 @@ public class Main {
                         System.out.println("Doctor not found with email: " + emailDoctorSearch);
                     }
                     break;
+                case 4:
+                    System.out.println("Listing all patients...");
+                    listPatients(lstPatients);
+                    break;
+                case 5:
+                    System.out.println("Searching patient ...... ");
+                    scanner.nextLine();
+                    System.out.println("Enter the email of the patient:");
+                    String emailPatientSearch = scanner.nextLine();
+                    Patient patientFound = searchPatientByEmail(lstPatients, emailPatientSearch);
+
+                    if(patientFound != null) {
+                        System.out.println("Patient found: " + patientFound);
+                        System.out.println("Select a doctor:");
+                        int k = 0;
+                        for (Doctor doctorItem : lstDoctors) {
+                            if(!doctorItem.getAvailableAppointments().isEmpty()) {
+                                System.out.println("["+(k+1)+"] Doctor: " + doctorItem.getName() + " - Speciality: " + doctorItem.getSpeciality());
+                            }else{
+                                System.out.println("["+(k+1)+"] Doctor: " + doctorItem.getName() + " has no available appointments.");
+                            }
+                            k++;
+                        }
+
+                        int doctorIndexSelection = scanner.nextInt();
+                        if (doctorIndexSelection <= 0 || doctorIndexSelection > lstDoctors.size() || lstDoctors.get(doctorIndexSelection - 1).getAvailableAppointments().isEmpty()) {
+                            System.out.println("Invalid doctor selection.");
+                            break;
+                        }
+                        k=0;
+                        Doctor selectedDoctor = lstDoctors.get(doctorIndexSelection - 1);
+                        for (Doctor.AvailableAppointment appointment : selectedDoctor.getAvailableAppointments()) {
+                            System.out.println("["+(k+1)+"] Date: " + appointment.getDate() + ", Time: " + appointment.getTime());
+                            k++;
+                        }
+                        System.out.println("Select an available appointment:");
+                        int availableAppointmentSelection = scanner.nextInt();
+                        if (availableAppointmentSelection < 1 || availableAppointmentSelection > selectedDoctor.getAvailableAppointments().size()) {
+                            System.out.println("Invalid appointment selection.");
+                            break;
+                        }
+                        Doctor.AvailableAppointment selectedAppointment = selectedDoctor.getAvailableAppointments().get(availableAppointmentSelection - 1);
+                        System.out.println("Scheduling appointment for patient: " + patientFound.getName()
+                                + " with doctor: " + selectedDoctor.getName() + " on " + selectedAppointment.getDate() + " at " + selectedAppointment.getTime());
+
+                        // Here you would typically create an AppointmentDoctor object and save it to a list or database
+                        patientFound.addAppointmentsDoctor(selectedDoctor, selectedAppointment.getDate(), selectedAppointment.getTime());
+
+                    }else{
+                        System.out.println("Patient not found with email: " + emailPatientSearch);
+                    }
+                    break;
                 case 0:
                     System.out.println("Exiting the program.");
                     //Doctor.setNextId(1); // Reset the ID counter
@@ -123,7 +175,12 @@ public class Main {
     public static void listDoctors(List<Doctor> lstDoctors) {
         for (Doctor doctor : lstDoctors) {
             System.out.println(doctor);
+        }
+    }
 
+    public static void listPatients(List<Patient> lstPatients) {
+        for (Patient patient : lstPatients) {
+            System.out.println(patient);
         }
     }
 
@@ -142,6 +199,13 @@ public class Main {
     public static Doctor searchDoctorByEmail(List<Doctor> lstDoctors, String email) {
         return lstDoctors.stream()
                 .filter(doctor -> doctor.getEmail().equalsIgnoreCase(email))
+                .findFirst()
+                .orElse(null);
+    }
+
+    public static Patient searchPatientByEmail(List<Patient> lstPatients, String email) {
+        return lstPatients.stream()
+                .filter(patient -> patient.getEmail().equalsIgnoreCase(email))
                 .findFirst()
                 .orElse(null);
     }

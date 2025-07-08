@@ -59,8 +59,19 @@ public class AppointmentDoctor implements ISchedulable {
 
     @Override
     public void schedule(Date date, String time) {
-        //this.date = date;
-        //this.time = time;
+        this.date = date;
+        this.time = time;
+    }
+
+    @Override
+    public String toString() {
+        return "AppointmentDoctor{" +
+                "id=" + id +
+                ", doctor=" + doctor.getName() +
+                ", patient=" + patient.getName() +
+                ", date=" + date +
+                ", time='" + time + '\'' +
+                '}';
     }
 }
 
