@@ -1,4 +1,4 @@
-package dev.mrodriguezul.interface_;
+package dev.mrodriguezul.interfaces;
 
 import java.util.Date;
 

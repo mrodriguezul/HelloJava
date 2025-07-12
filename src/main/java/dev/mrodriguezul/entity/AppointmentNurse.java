@@ -1,7 +1,7 @@
 package dev.mrodriguezul.entity;
 
 import java.util.Date;
-import dev.mrodriguezul.interface_.ISchedulable;
+import dev.mrodriguezul.interfaces.ISchedulable;
 
 public class AppointmentNurse implements ISchedulable {
     private int id;

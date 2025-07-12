@@ -68,5 +68,9 @@ public abstract class Person {
         return name + " - " + email + " - " + address + " - " + phoneNumber;
     }
 
+    public void successValidationMessage(){
+        System.out.println("Success validation for Person: " + this.getName() + ", Email: " + this.getEmail());
+    }
+
     public abstract void displayInfo();
 }
