@@ -70,6 +70,15 @@ public class Function5 {
                 .collect(Collectors.toList());
 
         appointmentAvailable.forEach(System.out::println);
+
+        System.out.println("\nAppointments grouped by doctor using Maps:");
+        Map<Doctor, List<DoctorAppointmentInfo>> appointmentsByDoctor = appointmentAvailable.stream()
+                .collect(Collectors.groupingBy(DoctorAppointmentInfo::getDoctor));
+        appointmentsByDoctor.forEach((doctor, appointments) -> {
+            System.out.println("Doctor: " + doctor.getName());
+            appointments.forEach(appointment ->
+                System.out.println("  Appointment: " + appointment.getDate("") + " at " + appointment.getTime()));
+        });
     }
 
     public static void testParallelStream() {
