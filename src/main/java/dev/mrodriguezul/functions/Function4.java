@@ -1,8 +1,6 @@
 package dev.mrodriguezul.functions;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -47,6 +45,21 @@ public class Function4 {
         System.out.println("Any name: " + findAny);
         System.out.println("Any name with length 5: " + findAny2);
 
+        Stream<Integer> lstLengthNames = lstAll.stream().map(String::length);
+        lstLengthNames.peek(v->System.out.println("watching: "+v)).forEach(System.out::println);
+
+        int maxLength1 = lstAll.stream().map(String::length).mapToInt(Integer::intValue).max().orElseGet(()-> 0);
+        //int maxLength2 = lstAll.stream().map(String::length).max((o1, o2) -> o2 - o1).orElse(0);
+        int maxLength3 = lstAll.stream().map(String::length).max(Integer::compareTo).orElse(0);
+        int maxLength4 = lstAll.stream().map(String::length).max(Comparator.naturalOrder()).orElseGet(()-> 0);
+        System.out.println("Max length of names 1: " + maxLength1);
+        //System.out.println("Max length of names 2: " + maxLength2);
+        System.out.println("Max length of names 3: " + maxLength3);
+        System.out.println("Max length of names 4: " + maxLength4);
+
+        lstAll.stream().reduce((s1, s2) -> s1+ " "+s2).ifPresent(System.out::println);
+        Optional.of(lstAll.stream().reduce("Bienvenidos: ", (s1, s2) -> s1 + ", " + s2)).ifPresent(System.out::println);
+        Optional.of(lstAll.stream().reduce(0, (s1, s2) -> s1 + s2.length(), Integer::sum)).ifPresent(System.out::println);
 
     }
 
