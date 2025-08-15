@@ -1,19 +1,20 @@
 package dev.mrodriguezul.entity;
 
 import dev.mrodriguezul.enums.GeneroPelicula;
+import dev.mrodriguezul.excepcion.PeliculaExistenteException;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class PlataformaStreaming {
     private String nombre;
     private List<Pelicula> contenido;
+    private Map<Pelicula, Integer> visualizaciones;
 
     public PlataformaStreaming(String nombre) {
         this.nombre = nombre;
-        contenido = new ArrayList<Pelicula>();
+        this.contenido = new ArrayList<Pelicula>();
+        this.visualizaciones = new HashMap<>();
     }
 
     public String getNombre() {
@@ -24,8 +25,29 @@ public class PlataformaStreaming {
         return contenido;
     }
 
+    public Map<Pelicula, Integer> getVisualizaciones() {
+        return visualizaciones;
+    }
+
     public void add(Pelicula elemento) {
+        Pelicula peliculaExistente = buscarPorTitulo(elemento.getTitulo());
+        if (peliculaExistente != null) {
+            throw new PeliculaExistenteException(elemento.getTitulo());
+        }
         this.contenido.add(elemento);
+    }
+
+    public void reproducir(Pelicula contenido) {
+        int conteoActual = visualizaciones.getOrDefault(contenido, 0);
+        System.out.println(contenido.getTitulo() + " se ha reproducido " + conteoActual + " veces.");
+
+        this.contarVisualizacion(contenido);
+        contenido.play();
+    }
+
+    private void contarVisualizacion(Pelicula contenido) {
+        int conteoActual = visualizaciones.getOrDefault(contenido, 0);
+        visualizaciones.put(contenido, conteoActual + 1);
     }
 
     public void remove(Pelicula elemento) {
@@ -62,6 +84,13 @@ public class PlataformaStreaming {
         return contenido.stream()
                 .mapToInt(Pelicula::getDuracion)
                 .sum();
+    }
+
+    public Pelicula getMasVisto() {
+        return visualizaciones.entrySet().stream()
+                .max(Map.Entry.comparingByValue())
+                .map(Map.Entry::getKey)
+                .orElse(null);
     }
 
 }
