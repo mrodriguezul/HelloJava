@@ -1,0 +1,26 @@
+package dev.mrodriguezul.enums;
+
+public enum GeneroPelicula {
+    ACCION("Acción"),
+    AVENTURA("Aventura"),
+    COMEDIA("Comedia"),
+    DRAMA("Drama"),
+    FANTASIA("Fantasía"),
+    HISTORICO("Histórico"),
+    MUSICAL("Musical"),
+    MISTERIO("Misterio"),
+    ROMANCE("Romance"),
+    SUSPENSO("Suspenso"),
+    TERROR("Terror"),
+    FICCION("Ficción");
+
+    private final String genero;
+
+    GeneroPelicula(String genero) {
+        this.genero = genero;
+    }
+
+    public String getGenero() {
+        return genero;
+    }
+}
