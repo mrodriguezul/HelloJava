@@ -12,7 +12,7 @@ public enum GeneroPelicula {
     ROMANCE("Romance"),
     SUSPENSO("Suspenso"),
     TERROR("Terror"),
-    FICCION("Ficción");
+    ANIMADA("Animada");
 
     private final String genero;
 

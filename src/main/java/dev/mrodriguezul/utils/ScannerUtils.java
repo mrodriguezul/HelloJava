@@ -41,12 +41,13 @@ public class ScannerUtils {
         for (GeneroPelicula genero : GeneroPelicula.values()) {
             System.out.print(" * " + genero.name());
         }
+        System.out.println(" : ");
         String input = SCANNER.nextLine().toUpperCase();
 
         try {
             return GeneroPelicula.valueOf(input);
         } catch (IllegalArgumentException e) {
-            System.out.println("Género de película no válido. Por favor, intente de nuevo.");
+            System.out.println("Género de película no válido. Por favor, intente nuevamente.");
             return readGeneroPelicula(message);
         }
     }
