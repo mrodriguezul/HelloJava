@@ -4,6 +4,7 @@ import dev.mrodriguezul.entity.Pelicula;
 import dev.mrodriguezul.entity.PlataformaStreaming;
 import dev.mrodriguezul.enums.GeneroPelicula;
 import dev.mrodriguezul.excepcion.PeliculaExistenteException;
+import dev.mrodriguezul.utils.FileUtils;
 import dev.mrodriguezul.utils.ScannerUtils;
 
 import java.util.List;
@@ -11,6 +12,10 @@ import java.util.List;
 public class AppMain {
     public static final String NOMBRE_PLATAFORMA = "HBO MAX";
     public static final String VERSION = "1.0.0";
+
+    public static final String CONTEXTO_STREAMING = "src/main/java/dev/mrodriguezul/practice/streaming/";
+    public static final String NOMBRE_ARCHIVO_BD_INICIAL = "peliculas.db";
+    public static final String SEPARADOR_BD_INICIAL = "|";
 
     public static final int AGREGAR = 1;
     public static final int MOSTRAR_TODO = 2;
@@ -123,49 +128,7 @@ public class AppMain {
     }
 
     private static void cargarPeliculas(PlataformaStreaming plataforma) {
-        plataforma.add(new Pelicula("Shrek", 90, GeneroPelicula.ANIMADA));
-        plataforma.add(new Pelicula("Inception", 148, GeneroPelicula.FANTASIA));
-        plataforma.add(new Pelicula("Titanic", 195, GeneroPelicula.DRAMA, 4.6));
-        plataforma.add(new Pelicula("John Wick", 101, GeneroPelicula.ACCION));
-        plataforma.add(new Pelicula("El Conjuro", 112, GeneroPelicula.TERROR, 3.0));
-        plataforma.add(new Pelicula("Coco", 105, GeneroPelicula.ANIMADA, 4.7));
-        plataforma.add(new Pelicula("Interstellar", 169, GeneroPelicula.FANTASIA, 5));
-        plataforma.add(new Pelicula("Joker", 122, GeneroPelicula.DRAMA));
-        plataforma.add(new Pelicula("Toy Story", 81, GeneroPelicula.ANIMADA, 4.5));
-        plataforma.add(new Pelicula("Avengers: Endgame", 181, GeneroPelicula.ACCION, 3.9));
-        plataforma.add(new Pelicula("The Matrix", 136, GeneroPelicula.FANTASIA, 4.8));
-        plataforma.add(new Pelicula("Parasite", 132, GeneroPelicula.DRAMA, 4.9));
-        plataforma.add(new Pelicula("The Godfather", 175, GeneroPelicula.DRAMA, 4.8));
-        plataforma.add(new Pelicula("The Dark Knight", 152, GeneroPelicula.ACCION, 4.7));
-        plataforma.add(new Pelicula("Forrest Gump", 142, GeneroPelicula.DRAMA, 4.6));
-        plataforma.add(new Pelicula("Gladiator", 155, GeneroPelicula.ACCION, 4.5));
-        plataforma.add(new Pelicula("The Shawshank Redemption", 142, GeneroPelicula.DRAMA, 4.9));
-        plataforma.add(new Pelicula("Pulp Fiction", 154, GeneroPelicula.FANTASIA, 4.6));
-        plataforma.add(new Pelicula("The Lord of the Rings: The Return of the King", 201, GeneroPelicula.FANTASIA, 4.8));
-        plataforma.add(new Pelicula("The Silence of the Lambs", 118, GeneroPelicula.MISTERIO, 4.7));
-        plataforma.add(new Pelicula("The Social Network", 120, GeneroPelicula.DRAMA, 4.5));
-        plataforma.add(new Pelicula("The Departed", 151, GeneroPelicula.DRAMA, 4.6));
-        plataforma.add(new Pelicula("The Prestige", 130, GeneroPelicula.MISTERIO, 4.7));
-        plataforma.add(new Pelicula("Fight Club", 139, GeneroPelicula.DRAMA, 4.8));
-        plataforma.add(new Pelicula("The Lion King", 88, GeneroPelicula.ANIMADA, 4.9));
-        plataforma.add(new Pelicula("Finding Nemo", 100, GeneroPelicula.ANIMADA, 4.6));
-        plataforma.add(new Pelicula("The Incredibles", 115, GeneroPelicula.ANIMADA, 4.7));
-        plataforma.add(new Pelicula("Up", 96, GeneroPelicula.ANIMADA, 4.8));
-        plataforma.add(new Pelicula("Zootopia", 108, GeneroPelicula.ANIMADA, 4.5));
-        plataforma.add(new Pelicula("Spider", 117, GeneroPelicula.ANIMADA, 4.6));
-        plataforma.add(new Pelicula("Inside Out", 95, GeneroPelicula.ANIMADA, 4.7));
-        plataforma.add(new Pelicula("WALL-E", 98, GeneroPelicula.ANIMADA, 4.8));
-        plataforma.add(new Pelicula("Ratatouille", 111, GeneroPelicula.ANIMADA, 4.6));
-        plataforma.add(new Pelicula("El Aro", 115, GeneroPelicula.TERROR, 3.5));
-        plataforma.add(new Pelicula("El Exorcista", 122, GeneroPelicula.TERROR, 4.0));
-        plataforma.add(new Pelicula("El Resplandor", 146, GeneroPelicula.TERROR, 4.2));
-        plataforma.add(new Pelicula("El Orfanato", 105, GeneroPelicula.TERROR, 3.8));
-        plataforma.add(new Pelicula("El Conjuro 2", 134, GeneroPelicula.TERROR, 3.9));
-        plataforma.add(new Pelicula("Mr. Bean", 88, GeneroPelicula.COMEDIA, 4.5));
-        plataforma.add(new Pelicula("La Vida es Bella", 116, GeneroPelicula.COMEDIA, 4.8));
-        plataforma.add(new Pelicula("Superbad", 113, GeneroPelicula.COMEDIA, 4.6));
-        plataforma.add(new Pelicula("The Hangover", 100, GeneroPelicula.COMEDIA, 4.7));
-        plataforma.add(new Pelicula("Groundhog Day", 101, GeneroPelicula.COMEDIA, 4.5));
+        plataforma.getContenido().addAll(FileUtils.getPeliculasFromFile(CONTEXTO_STREAMING +NOMBRE_ARCHIVO_BD_INICIAL, SEPARADOR_BD_INICIAL));
     }
 
 }

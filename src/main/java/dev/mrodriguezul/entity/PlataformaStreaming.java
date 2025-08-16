@@ -2,9 +2,12 @@ package dev.mrodriguezul.entity;
 
 import dev.mrodriguezul.enums.GeneroPelicula;
 import dev.mrodriguezul.excepcion.PeliculaExistenteException;
+import dev.mrodriguezul.utils.FileUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
+
+import static dev.mrodriguezul.practice.streaming.AppMain.*;
 
 public class PlataformaStreaming {
     private String nombre;
@@ -34,6 +37,11 @@ public class PlataformaStreaming {
         if (peliculaExistente != null) {
             throw new PeliculaExistenteException(elemento.getTitulo());
         }
+        FileUtils.savePelicula(
+                CONTEXTO_STREAMING + NOMBRE_ARCHIVO_BD_INICIAL,
+                SEPARADOR_BD_INICIAL,
+                elemento
+        );
         this.contenido.add(elemento);
     }
 
