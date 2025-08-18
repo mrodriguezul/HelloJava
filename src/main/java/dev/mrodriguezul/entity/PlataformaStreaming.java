@@ -1,7 +1,7 @@
 package dev.mrodriguezul.entity;
 
-import dev.mrodriguezul.enums.GeneroPelicula;
-import dev.mrodriguezul.excepcion.PeliculaExistenteException;
+import dev.mrodriguezul.enums.GeneroContenido;
+import dev.mrodriguezul.excepcion.ContenidoExistenteException;
 import dev.mrodriguezul.utils.FileUtils;
 
 import java.util.*;
@@ -11,12 +11,12 @@ import static dev.mrodriguezul.practice.streaming.AppMain.*;
 
 public class PlataformaStreaming {
     private String nombre;
-    private List<Pelicula> contenido;
-    private Map<Pelicula, Integer> visualizaciones;
+    private List<Contenido> contenido;
+    private Map<Contenido, Integer> visualizaciones;
 
     public PlataformaStreaming(String nombre) {
         this.nombre = nombre;
-        this.contenido = new ArrayList<Pelicula>();
+        this.contenido = new ArrayList<Contenido>();
         this.visualizaciones = new HashMap<>();
     }
 
@@ -24,20 +24,20 @@ public class PlataformaStreaming {
         return nombre;
     }
 
-    public List<Pelicula> getContenido() {
+    public List<Contenido> getContenido() {
         return contenido;
     }
 
-    public Map<Pelicula, Integer> getVisualizaciones() {
+    public Map<Contenido, Integer> getVisualizaciones() {
         return visualizaciones;
     }
 
-    public void add(Pelicula elemento) {
-        Pelicula peliculaExistente = buscarPorTitulo(elemento.getTitulo());
-        if (peliculaExistente != null) {
-            throw new PeliculaExistenteException(elemento.getTitulo());
+    public void add(Contenido elemento) {
+        Contenido contenidoExistente = buscarPorTitulo(elemento.getTitulo());
+        if (contenidoExistente != null) {
+            throw new ContenidoExistenteException(elemento.getTitulo());
         }
-        FileUtils.savePelicula(
+        FileUtils.saveContenido(
                 CONTEXTO_STREAMING + NOMBRE_ARCHIVO_BD_INICIAL,
                 SEPARADOR_BD_INICIAL,
                 elemento
@@ -45,7 +45,7 @@ public class PlataformaStreaming {
         this.contenido.add(elemento);
     }
 
-    public void reproducir(Pelicula contenido) {
+    public void reproducir(Contenido contenido) {
         int conteoActual = visualizaciones.getOrDefault(contenido, 0);
         System.out.println(contenido.getTitulo() + " se ha reproducido " + conteoActual + " veces.");
 
@@ -53,48 +53,48 @@ public class PlataformaStreaming {
         contenido.play();
     }
 
-    private void contarVisualizacion(Pelicula contenido) {
+    private void contarVisualizacion(Contenido contenido) {
         int conteoActual = visualizaciones.getOrDefault(contenido, 0);
         visualizaciones.put(contenido, conteoActual + 1);
     }
 
-    public void remove(Pelicula elemento) {
+    public void remove(Contenido elemento) {
         this.contenido.remove(elemento);
     }
 
     public List<String> getTitulos() {
         return contenido.stream()
-                .map(Pelicula::getTitulo)
+                .map(Contenido::getTitulo)
                 .collect(Collectors.toList());
     }
 
-    public Pelicula buscarPorTitulo(String titulo) {
+    public Contenido buscarPorTitulo(String titulo) {
         return contenido.stream()
                 .filter(contenido -> contenido.getTitulo().contains(titulo))
                 .findFirst()
                 .orElse(null);
     }
 
-    public List<Pelicula> buscarPorGenero(GeneroPelicula genero) {
+    public List<Contenido> buscarPorGenero(GeneroContenido genero) {
         return contenido.stream()
                 .filter(contenido -> contenido.getGenero().equals(genero))
                 .collect(Collectors.toList());
     }
 
-    public List<Pelicula> getPopulares(int cantidad) {
+    public List<Contenido> getPopulares(int cantidad) {
         return contenido.stream()
-                .sorted(Comparator.comparingDouble(Pelicula::getCalificacion).reversed())
+                .sorted(Comparator.comparingDouble(Contenido::getCalificacion).reversed())
                 .limit(cantidad)
                 .collect(Collectors.toList());
     }
 
     public int getDuracionTotal() {
         return contenido.stream()
-                .mapToInt(Pelicula::getDuracion)
+                .mapToInt(Contenido::getDuracion)
                 .sum();
     }
 
-    public Pelicula getMasVisto() {
+    public Contenido getMasVisto() {
         return visualizaciones.entrySet().stream()
                 .max(Map.Entry.comparingByValue())
                 .map(Map.Entry::getKey)

@@ -1,6 +1,6 @@
 package dev.mrodriguezul.enums;
 
-public enum GeneroPelicula {
+public enum GeneroContenido {
     ACCION("Acción"),
     AVENTURA("Aventura"),
     COMEDIA("Comedia"),
@@ -16,7 +16,7 @@ public enum GeneroPelicula {
 
     private final String genero;
 
-    GeneroPelicula(String genero) {
+    GeneroContenido(String genero) {
         this.genero = genero;
     }
 

@@ -1,6 +1,6 @@
 package dev.mrodriguezul.utils;
 
-import dev.mrodriguezul.enums.GeneroPelicula;
+import dev.mrodriguezul.enums.GeneroContenido;
 
 import java.util.Scanner;
 
@@ -36,19 +36,19 @@ public class ScannerUtils {
         return dato;
     }
 
-    public static GeneroPelicula readGeneroPelicula(String message) {
+    public static GeneroContenido readGeneroContenido(String message) {
         System.out.print(message + ":" + "\nOpciones:");
-        for (GeneroPelicula genero : GeneroPelicula.values()) {
+        for (GeneroContenido genero : GeneroContenido.values()) {
             System.out.print(" * " + genero.name());
         }
         System.out.println(" : ");
         String input = SCANNER.nextLine().toUpperCase();
 
         try {
-            return GeneroPelicula.valueOf(input);
+            return GeneroContenido.valueOf(input);
         } catch (IllegalArgumentException e) {
             System.out.println("Género de película no válido. Por favor, intente nuevamente.");
-            return readGeneroPelicula(message);
+            return readGeneroContenido(message);
         }
     }
 

@@ -1,7 +1,7 @@
 package dev.mrodriguezul.utils;
 
-import dev.mrodriguezul.entity.Pelicula;
-import dev.mrodriguezul.enums.GeneroPelicula;
+import dev.mrodriguezul.entity.Contenido;
+import dev.mrodriguezul.enums.GeneroContenido;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -14,13 +14,13 @@ import java.util.regex.Pattern;
 
 public class FileUtils {
 
-    public static void savePelicula(String nombreArchivo, String separador, Pelicula pelicula) {
+    public static void saveContenido(String nombreArchivo, String separador, Contenido contenido) {
         String linea = String.join(separador,
-                pelicula.getTitulo(),
-                String.valueOf(pelicula.getDuracion()),
-                pelicula.getGenero().name(),
-                String.valueOf(pelicula.getCalificacion()),
-                pelicula.getFechaEstreno().toString()
+                contenido.getTitulo(),
+                String.valueOf(contenido.getDuracion()),
+                contenido.getGenero().name(),
+                String.valueOf(contenido.getCalificacion()),
+                contenido.getFechaEstreno().toString()
         );
 
         try {
@@ -33,8 +33,8 @@ public class FileUtils {
         }
     }
 
-    public static List<Pelicula> getPeliculasFromFile(String nombreArchivo, String separador) {
-        List<Pelicula> listaPeliculas = new ArrayList<>();
+    public static List<Contenido> getContenidoFromFile(String nombreArchivo, String separador) {
+        List<Contenido> listaContenidos = new ArrayList<>();
 
         try {
             List<String> lineas = Files.readAllLines(Paths.get(nombreArchivo));
@@ -44,19 +44,19 @@ public class FileUtils {
                 if (datos.length == 5) {
                     String titulo = datos[0];
                     int duracion = Integer.parseInt(datos[1]);
-                    GeneroPelicula genero = GeneroPelicula.valueOf(datos[2].toUpperCase());
+                    GeneroContenido genero = GeneroContenido.valueOf(datos[2].toUpperCase());
                     double calificacion = datos[3].isBlank() ? 0 : Double.parseDouble(datos[3]);
                     LocalDate fechaEstreno = LocalDate.parse(datos[4]);
 
-                    Pelicula pelicula = new Pelicula(titulo, duracion, genero, calificacion);
-                    pelicula.setFechaEstreno(fechaEstreno);
+                    Contenido contenido = new Contenido(titulo, duracion, genero, calificacion);
+                    contenido.setFechaEstreno(fechaEstreno);
 
-                    listaPeliculas.add(pelicula);
+                    listaContenidos.add(contenido);
                 }
             });
         } catch (IOException e) {
             System.out.println("Error al leer archivo: "+nombreArchivo+". "+ e.getMessage());
         }
-        return listaPeliculas;
+        return listaContenidos;
     }
 }

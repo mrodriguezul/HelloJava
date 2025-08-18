@@ -1,19 +1,19 @@
 package dev.mrodriguezul.entity;
 
-import dev.mrodriguezul.enums.GeneroPelicula;
+import dev.mrodriguezul.enums.GeneroContenido;
 
 import java.time.LocalDate;
 
-public class Pelicula {
+public class Contenido {
     private String titulo;
     private String descripcion;
     private int duracion;
-    private GeneroPelicula genero;
+    private GeneroContenido genero;
     private LocalDate fechaEstreno;
     private double calificacion;
     private boolean disponible;
 
-    public Pelicula(String titulo, int duracion, GeneroPelicula genero) {
+    public Contenido(String titulo, int duracion, GeneroContenido genero) {
         this.titulo = titulo;
         this.duracion = duracion;
         this.genero = genero;
@@ -21,7 +21,7 @@ public class Pelicula {
         this.disponible = true;
     }
 
-    public Pelicula(String titulo, int duracion, GeneroPelicula genero, double calificacion) {
+    public Contenido(String titulo, int duracion, GeneroContenido genero, double calificacion) {
         this(titulo, duracion, genero);
         this.calificar(calificacion);
     }
@@ -62,7 +62,7 @@ public class Pelicula {
         this.duracion = duracion;
     }
 
-    public GeneroPelicula getGenero() {
+    public GeneroContenido getGenero() {
         return genero;
     }
 

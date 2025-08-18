@@ -1,9 +1,9 @@
 package dev.mrodriguezul.practice.streaming;
 
-import dev.mrodriguezul.entity.Pelicula;
+import dev.mrodriguezul.entity.Contenido;
 import dev.mrodriguezul.entity.PlataformaStreaming;
-import dev.mrodriguezul.enums.GeneroPelicula;
-import dev.mrodriguezul.excepcion.PeliculaExistenteException;
+import dev.mrodriguezul.enums.GeneroContenido;
+import dev.mrodriguezul.excepcion.ContenidoExistenteException;
 import dev.mrodriguezul.utils.FileUtils;
 import dev.mrodriguezul.utils.ScannerUtils;
 
@@ -14,7 +14,7 @@ public class AppMain {
     public static final String VERSION = "1.0.0";
 
     public static final String CONTEXTO_STREAMING = "src/main/java/dev/mrodriguezul/practice/streaming/";
-    public static final String NOMBRE_ARCHIVO_BD_INICIAL = "peliculas.db";
+    public static final String NOMBRE_ARCHIVO_BD_INICIAL = "contenido-streaming.db";
     public static final String SEPARADOR_BD_INICIAL = "|";
 
     public static final int AGREGAR = 1;
@@ -31,7 +31,7 @@ public class AppMain {
         PlataformaStreaming plataforma = new PlataformaStreaming(NOMBRE_PLATAFORMA);
         System.out.println(NOMBRE_PLATAFORMA + " v" + VERSION);
 
-        cargarPeliculas(plataforma);
+        cargarListaContenido(plataforma);
 
         System.out.println("Disfruta de " + plataforma.getDuracionTotal() + " minutos de contenido! \n");
 
@@ -52,14 +52,14 @@ public class AppMain {
             switch (opcion) {
                 case AGREGAR:
                     String nombre = ScannerUtils.readString("Nombre del contenido");
-                    GeneroPelicula genero = ScannerUtils.readGeneroPelicula("Genero del contenido");
+                    GeneroContenido genero = ScannerUtils.readGeneroContenido("Genero del contenido");
                     int duracion = ScannerUtils.readInt("Duracion del contenido");
                     double calificacion = ScannerUtils.readDouble("Calificacion del contenido");
 
                     try {
-                        plataforma.add(new Pelicula(nombre, duracion, genero, calificacion));
+                        plataforma.add(new Contenido(nombre, duracion, genero, calificacion));
                         System.out.println(nombre + " agregado! ✅");
-                    }catch (PeliculaExistenteException e) {
+                    }catch (ContenidoExistenteException e) {
                         System.out.println(e.getMessage());
                     }
                     break;
@@ -69,51 +69,51 @@ public class AppMain {
                     break;
                 case BUSCAR_POR_TITULO:
                     String nombreBuscado = ScannerUtils.readString("Nombre del contenido a buscar");
-                    Pelicula contenido = plataforma.buscarPorTitulo(nombreBuscado);
+                    Contenido contenidoBuscado = plataforma.buscarPorTitulo(nombreBuscado);
 
-                    if (contenido != null) {
-                        System.out.println(contenido.getDetallesTecnicos());
+                    if (contenidoBuscado != null) {
+                        System.out.println(contenidoBuscado.getDetallesTecnicos());
                     } else {
                         System.out.println(nombreBuscado + " no existe dentro de " + plataforma.getNombre());
                     }
                     break;
                 case BUSCAR_POR_GENERO:
-                    GeneroPelicula generoBuscado = ScannerUtils.readGeneroPelicula("Genero del contenido a buscar");
+                    GeneroContenido generoBuscado = ScannerUtils.readGeneroContenido("Genero del contenido a buscar");
 
-                    List<Pelicula> peliculasPorGenero = plataforma.buscarPorGenero(generoBuscado);
-                    System.out.println(peliculasPorGenero.size() + " encontrados para el genero " + generoBuscado);
-                    peliculasPorGenero.forEach(pelicula -> System.out.println(pelicula.getDetallesTecnicos()));
+                    List<Contenido> listaContenidoPorGenero = plataforma.buscarPorGenero(generoBuscado);
+                    System.out.println(listaContenidoPorGenero.size() + " encontrados para el genero " + generoBuscado);
+                    listaContenidoPorGenero.forEach(contenido -> System.out.println(contenido.getDetallesTecnicos()));
                     break;
                 case VER_POPULARES:
                     int cantidad = ScannerUtils.readInt("Cantidad de resultados a mostrar");
 
-                    List<Pelicula> peliculasPopulares = plataforma.getPopulares(cantidad);
-                    peliculasPopulares.forEach(pelicula -> System.out.println(pelicula.getDetallesTecnicos()));
+                    List<Contenido> listaContenidoPopulares = plataforma.getPopulares(cantidad);
+                    listaContenidoPopulares.forEach(contenido -> System.out.println(contenido.getDetallesTecnicos()));
                     break;
                 case REPRODUCIR:
-                    String nombreReproducir = ScannerUtils.readString("Nombre de la película a reproducir");
-                    Pelicula peliculaReproducir = plataforma.buscarPorTitulo(nombreReproducir);
+                    String nombreReproducir = ScannerUtils.readString("Nombre de contenido a reproducir");
+                    Contenido contenidoReproducir = plataforma.buscarPorTitulo(nombreReproducir);
 
-                    if (peliculaReproducir != null) {
-                        plataforma.reproducir(peliculaReproducir);
+                    if (contenidoReproducir != null) {
+                        plataforma.reproducir(contenidoReproducir);
                     } else {
                         System.out.println(nombreReproducir + " no se encuentra en la plataforma.");
                     }
                     break;
                 case MAS_VISTO:
-                    Pelicula masVisto = plataforma.getMasVisto();
-                    if (masVisto != null) {
-                        System.out.println("El contenido mas visto es: " + masVisto.getTitulo() + " con " + plataforma.getVisualizaciones().get(masVisto)+ " reproducciones.");
+                    Contenido contenidoMasVisto = plataforma.getMasVisto();
+                    if (contenidoMasVisto != null) {
+                        System.out.println("El contenido mas visto es: " + contenidoMasVisto.getTitulo() + " con " + plataforma.getVisualizaciones().get(contenidoMasVisto)+ " reproducciones.");
                     } else {
                         System.out.println("No hay contenido reproducido en " + plataforma.getNombre());
                     }
                     break;
                 case ELIMINAR:
                     String nombreAEliminar = ScannerUtils.readString("Nombre del contenido a eliminar");
-                    Pelicula pelicula = plataforma.buscarPorTitulo(nombreAEliminar);
+                    Contenido contenidoEliminar = plataforma.buscarPorTitulo(nombreAEliminar);
 
-                    if (pelicula != null) {
-                        plataforma.remove(pelicula);
+                    if (contenidoEliminar != null) {
+                        plataforma.remove(contenidoEliminar);
                         System.out.println(nombreAEliminar + " eliminado! ❌");
                     } else {
                         System.out.println(nombreAEliminar + " no existe dentro de " + plataforma.getNombre());
@@ -127,8 +127,8 @@ public class AppMain {
 
     }
 
-    private static void cargarPeliculas(PlataformaStreaming plataforma) {
-        plataforma.getContenido().addAll(FileUtils.getPeliculasFromFile(CONTEXTO_STREAMING +NOMBRE_ARCHIVO_BD_INICIAL, SEPARADOR_BD_INICIAL));
+    private static void cargarListaContenido(PlataformaStreaming plataforma) {
+        plataforma.getContenido().addAll(FileUtils.getContenidoFromFile(CONTEXTO_STREAMING +NOMBRE_ARCHIVO_BD_INICIAL, SEPARADOR_BD_INICIAL));
     }
 
 }
