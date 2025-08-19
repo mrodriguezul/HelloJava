@@ -4,7 +4,7 @@ import dev.mrodriguezul.enums.GeneroContenido;
 
 import java.time.LocalDate;
 
-public class Contenido {
+public abstract class Contenido {
     private String titulo;
     private String descripcion;
     private int duracion;

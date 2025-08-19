@@ -88,6 +88,20 @@ public class PlataformaStreaming {
                 .collect(Collectors.toList());
     }
 
+    public List<Pelicula> getPeliculas() {
+        return contenido.stream()
+                .filter(contenido -> contenido instanceof Pelicula)
+                .map(contenido -> (Pelicula) contenido)
+                .collect(Collectors.toList());
+    }
+
+    public List<Documental> getDocumentales() {
+        return contenido.stream()
+                .filter(contenido -> contenido instanceof Documental)
+                .map(contenido -> (Documental) contenido)
+                .collect(Collectors.toList());
+    }
+
     public int getDuracionTotal() {
         return contenido.stream()
                 .mapToInt(Contenido::getDuracion)

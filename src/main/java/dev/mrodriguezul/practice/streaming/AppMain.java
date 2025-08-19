@@ -1,6 +1,8 @@
 package dev.mrodriguezul.practice.streaming;
 
 import dev.mrodriguezul.entity.Contenido;
+import dev.mrodriguezul.entity.Documental;
+import dev.mrodriguezul.entity.Pelicula;
 import dev.mrodriguezul.entity.PlataformaStreaming;
 import dev.mrodriguezul.enums.GeneroContenido;
 import dev.mrodriguezul.excepcion.ContenidoExistenteException;
@@ -24,8 +26,9 @@ public class AppMain {
     public static final int VER_POPULARES = 5;
     public static final int REPRODUCIR = 6;
     public static final int MAS_VISTO = 7;
-    public static final int ELIMINAR = 8;
-    public static final int SALIR = 9;
+    public static final int BUSCAR_POR_TIPO = 8;
+    public static final int ELIMINAR = 9;
+    public static final int SALIR = 0;
 
     public static void main(String[] args) {
         PlataformaStreaming plataforma = new PlataformaStreaming(NOMBRE_PLATAFORMA);
@@ -45,19 +48,30 @@ public class AppMain {
                 "5. Ver populares\n" +
                 "6. Reproducir\n" +
                 "7. Mas Visto\n" +
-                "8. Eliminar\n" +
-                "9. Salir\n"
+                "8. Buscar por tipo\n" +
+                "9. Eliminar\n" +
+                "0. Salir\n"
             );
 
             switch (opcion) {
                 case AGREGAR:
+                    int tipoDeContenido = ScannerUtils.readInt("¿Que tipo de contenido quieres agregar? (1.Pelicula / 2.Documental)");
+
                     String nombre = ScannerUtils.readString("Nombre del contenido");
                     GeneroContenido genero = ScannerUtils.readGeneroContenido("Genero del contenido");
                     int duracion = ScannerUtils.readInt("Duracion del contenido");
                     double calificacion = ScannerUtils.readDouble("Calificacion del contenido");
 
                     try {
-                        plataforma.add(new Contenido(nombre, duracion, genero, calificacion));
+                        if (tipoDeContenido == 1) {
+                            plataforma.add(new Pelicula(nombre, duracion, genero, calificacion));
+                        } else if (tipoDeContenido == 2) {
+                            String tema = ScannerUtils.readString("Tema del documental");
+                            plataforma.add(new Documental(nombre, duracion, genero, calificacion, tema));
+                        } else {
+                            System.out.println("Tipo de contenido no válido. Por favor, intente nuevamente.");
+                            continue;
+                        }
                         System.out.println(nombre + " agregado! ✅");
                     }catch (ContenidoExistenteException e) {
                         System.out.println(e.getMessage());
@@ -106,6 +120,16 @@ public class AppMain {
                         System.out.println("El contenido mas visto es: " + contenidoMasVisto.getTitulo() + " con " + plataforma.getVisualizaciones().get(contenidoMasVisto)+ " reproducciones.");
                     } else {
                         System.out.println("No hay contenido reproducido en " + plataforma.getNombre());
+                    }
+                    break;
+                case BUSCAR_POR_TIPO:
+                    int tipoContenido = ScannerUtils.readInt("Tipo de contenido a buscar (1.Pelicula / 2.Documental)");
+                    if (tipoContenido == 1) {
+                        List<Pelicula> listaPeliculas = plataforma.getPeliculas();
+                        listaPeliculas.forEach(pelicula -> System.out.println(pelicula.getDetallesTecnicos() + "\n"));
+                    } else {
+                        List<Documental> listaDocumentales = plataforma.getDocumentales();
+                        listaDocumentales.forEach(documental -> System.out.println(documental.getDetallesTecnicos() + "\n"));
                     }
                     break;
                 case ELIMINAR:
