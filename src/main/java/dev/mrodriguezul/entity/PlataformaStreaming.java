@@ -2,6 +2,7 @@ package dev.mrodriguezul.entity;
 
 import dev.mrodriguezul.enums.GeneroContenido;
 import dev.mrodriguezul.excepcion.ContenidoExistenteException;
+import dev.mrodriguezul.interfaces.IPromocionable;
 import dev.mrodriguezul.utils.FileUtils;
 
 import java.util.*;
@@ -99,6 +100,13 @@ public class PlataformaStreaming {
         return contenido.stream()
                 .filter(contenido -> contenido instanceof Documental)
                 .map(contenido -> (Documental) contenido)
+                .collect(Collectors.toList());
+    }
+
+    public List<IPromocionable> getContenidoPromocional() {
+        return contenido.stream()
+                .filter(contenido -> contenido instanceof IPromocionable)
+                .map(contenido -> (IPromocionable) contenido)
                 .collect(Collectors.toList());
     }
 

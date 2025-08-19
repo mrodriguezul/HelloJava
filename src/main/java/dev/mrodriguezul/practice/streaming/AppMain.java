@@ -37,6 +37,7 @@ public class AppMain {
         cargarListaContenido(plataforma);
 
         System.out.println("Disfruta de " + plataforma.getDuracionTotal() + " minutos de contenido! \n");
+        plataforma.getContenidoPromocional().forEach(contenido -> System.out.println(contenido.promocionar()));
 
         while (true) {
             int opcion = ScannerUtils.readInt(

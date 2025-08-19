@@ -26,9 +26,7 @@ public abstract class Contenido {
         this.calificar(calificacion);
     }
 
-    public void play() {
-        System.out.println("Reproduciendo ... " + titulo);
-    }
+    public abstract void play();
 
     public String getDetallesTecnicos() {
         return "\n" + titulo + " (" + fechaEstreno.getYear() + ")\n" +
