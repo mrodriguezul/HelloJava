@@ -1,6 +1,7 @@
 package dev.mrodriguezul.practice.staff;
 
 import dev.mrodriguezul.entity.Employee;
+import dev.mrodriguezul.entity.EmployeeLite;
 import dev.mrodriguezul.enums.EmployeePosition;
 
 import java.util.Comparator;
@@ -12,7 +13,9 @@ import java.util.stream.Collectors;
 public class AppMain {
     public static void main(String[] args) {
         List<Employee> employees = generateEmployees();
+        List<EmployeeLite> employeeLites = getEmployeeLiteList(employees);
         //employees.forEach(System.out::println);
+        employeeLites.forEach(System.out::println);
 
         //Get the email of three younger people of the list which position is DEVELOPER
 //        getEmailOfThreeYoungerDevelopers(employees);
@@ -21,7 +24,7 @@ public class AppMain {
         //Get map of employees grouped by position
         //getMapOfEmployeesGroupedByPosition(employees);
         //getMapOfEmployeesGroupedByPositionWithCount(employees);
-        getMapOfEmployeesGroupedByPositionWithAverageSalary(employees);
+        //getMapOfEmployeesGroupedByPositionWithAverageSalary(employees);
 //        getMapOfEmployeesGroupedByPositionWithAverageSalaryAndCount(employees);
 
         //Get the average salary, the highes, the lowest of employees in the company using just one operation
@@ -200,6 +203,14 @@ public class AppMain {
                 new Employee(30L, "Brian", "Carter", "brian.carter@example.com", "1985-09-17", 68000.0, EmployeePosition.QA)
         );
         return employees;
+    }
+
+    public static List<EmployeeLite> getEmployeeLiteList(List<Employee> employees) {
+        return employees.stream()
+                .sorted(Comparator.comparing(Employee::getNames))
+                .sorted((e1, e2) -> e1.getLastNames().compareTo(e2.getLastNames()))
+                .map(e -> new EmployeeLite(e.getId(), e.getNames()+ " " +e.getLastNames(), e.getSalary(), e.getPosition()))
+                .collect(Collectors.toList());
     }
 
 }
