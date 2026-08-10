@@ -4,6 +4,7 @@ import dev.mrodriguezul.entity.Employee;
 import dev.mrodriguezul.entity.EmployeeLite;
 import dev.mrodriguezul.enums.EmployeePosition;
 
+import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.DoubleSummaryStatistics;
 import java.util.List;
@@ -15,7 +16,8 @@ public class AppMain {
         List<Employee> employees = generateEmployees();
         List<EmployeeLite> employeeLites = getEmployeeLiteList(employees);
         //employees.forEach(System.out::println);
-        employeeLites.forEach(System.out::println);
+        //employeeLites.forEach(System.out::println);
+        //employeeLites.stream().filter(e-> e.position() == EmployeePosition.DEVELOPER).forEach(System.out::println);
 
         //Get the email of three younger people of the list which position is DEVELOPER
 //        getEmailOfThreeYoungerDevelopers(employees);
@@ -34,7 +36,84 @@ public class AppMain {
         //getEmployeesGroupedBySalary(employees);
         //getEmployeesGroupedBySalaryThreeGroups(employees);
 
+        //get employees with age is between 40 and 50 years old
+        //getEmployeesWithAgeBetween40And50(employees);
 
+        //Group employees by age, one group with employees with age lower than 20, another group with employees with age between 20 and 30, and another group with employees with age higher than 30
+        //Pending implementation!!
+
+        //Is there any employee with age over than 40 years old?
+        //getEmployeeAgeOver40(employees);
+
+        //Get full name of employees separated by comma and sorted by last name in ascending order
+        //getEmployeesFullNameSeparetlyByComma(employees);
+
+        //Get a List of positions of employees without duplicates and sorted by position in ascending order
+        //getEmployeesPositionsWithoutDuplicates(employees);
+
+        //Get all the employees which salary is over than the overage salary of the company and sorted by salary in descending order
+        //getEmployeesWithSalaryOverAverage(employees);
+
+        employees.stream()
+                .max(Comparator.comparing(Employee::getSalary))
+                .ifPresent(e -> System.out.println("Employee with highest salary: " + e));
+    }
+
+    public static void getEmployeesWithSalaryOverAverage(List<Employee> employees) {
+        employees.stream()
+                .filter(e -> e.getSalary() > employees.stream()
+                                                                .mapToDouble(Employee::getSalary)
+                                                                .average()
+                                                                .getAsDouble())
+                .sorted(Comparator.comparing(Employee::getSalary).reversed())
+                .forEach(System.out::println);
+    }
+
+    public static void getEmployeesPositionsWithoutDuplicates(List<Employee> employees) {
+        employees.stream()
+                .map(Employee::getPosition)
+                .distinct()
+                .sorted(Comparator.comparing(EmployeePosition::getPosition))
+                .forEach(System.out::println);
+    }
+
+    public static void getEmployeesFullNameSeparetlyByComma(List<Employee> employees){
+        String fullNames = employees.stream()
+                .sorted(Comparator.comparing(Employee::getLastNames))
+                .map(e -> e.getNames() + " " + e.getLastNames())
+                .reduce("", (accumulator, fullName) -> accumulator.isEmpty()? fullName : accumulator + ", " + fullName);
+
+        System.out.println("Full names of employees : " + fullNames);
+    }
+
+    public static void getEmployeesWithAgeBetween40And50(List<Employee> employees) {
+        List<Employee> employeesWithAgeBetween40And50 = employees.stream()
+                .filter(e -> {
+                    int age = LocalDate.now().getYear() - e.getBirthdate().getYear();
+                    return age >= 40 && age <= 50;
+                })
+                .toList();
+
+        System.out.println("Employees with age between 40 and 50 years old:");
+        employeesWithAgeBetween40And50.forEach(System.out::println);
+
+        employees.stream()
+                .filter(e -> e.getBirthdate().plusYears(40).isBefore(LocalDate.now()))
+                .filter(e -> e.getBirthdate().plusYears(50).isAfter(LocalDate.now()))
+                .forEach(System.out::println);
+    }
+
+    public static void getEmployeeAgeOver40(List<Employee> employees){
+        boolean isThereAnyAgeOver40 = employees.stream()
+                .anyMatch(e -> e.getBirthdate().plusYears(40).isBefore(LocalDate.now()));
+        System.out.println("isThereAnyAgeOver40: "+isThereAnyAgeOver40);
+
+        //Get any employee with age over than 40 years old
+        Employee e1 = employees.stream()
+                .filter(e -> e.getBirthdate().plusYears(40).isBefore(LocalDate.now()))
+                .findAny()
+                .orElse(null);
+        System.out.println("Employee with age over than 40 years old: "+e1);
     }
 
     public static void getEmailOfThreeYoungerDevelopers(List<Employee> employees) {
